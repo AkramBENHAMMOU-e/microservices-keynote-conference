@@ -1,5 +1,6 @@
 package com.tp.conferenceservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,18 +13,13 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Review {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private UUID id;
     private String texte;
     private Date date;
-    private int  note;
+    private int note;
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Conference conference;
 
-    public void setNote(int note) {
-        if(this.note < 0 || this.note > 5){
-            throw new IllegalArgumentException("Note must be between 0 and 5");
-        }
-        this.note = note;
-    }
 }

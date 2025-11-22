@@ -3,8 +3,6 @@ package com.tp.keynoteserice.web;
 import com.tp.keynoteserice.entities.Keynote;
 import com.tp.keynoteserice.repository.KeynoteRepository;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Key;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +31,21 @@ public class KeynoteController {
     public Keynote getKeynoteById(@PathVariable UUID id){
         return keynoteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Keynote not found with id " + id));
+    }
+
+    @PutMapping("/keynotes/{id}")
+    public Keynote updateKeynote(@PathVariable UUID id, @RequestBody Keynote keynote){
+        Keynote k = keynoteRepository.findById(id).get();
+        k.setName(keynote.getName());
+        k.setPrenom(keynote.getPrenom());
+        k.setEmail(keynote.getEmail());
+        k.setFonction(keynote.getFonction());
+        return keynoteRepository.save(k);
+    }
+
+    @DeleteMapping("/keynotes/{id}")
+    public void deleteKeynote(@PathVariable UUID id){
+        keynoteRepository.deleteById(id);
     }
 
 }
