@@ -1,0 +1,49 @@
+<div class="card mt-5 m-2">
+  <div class="card-header">
+      <label class="form-label me-3">Recherche:</label>
+      <input type="text" class="form-control " style="width:80% ;display: inline" [(ngModel)]="keyword" placeholder="Search">
+      <button class="btn btn-primary ms-2" style="display: inline" (click)="searchConference()"><i class="bi bi-search"></i></button>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Durée</th>
+        <th>Nombre Inscrits</th>
+        <th>Score</th>
+        <th>keynotes</th>
+      </tr>
+      </thead>
+      <tbody *ngIf="conferences">
+       <tr class="m-4" *ngFor="let conference of conferences">
+         <td>{{conference.titre}}</td>
+         <td>{{conference.type}}</td>
+         <td>{{conference.date}}</td>
+         <td>{{conference.duree}}</td>
+         <td>{{conference.nbreInscrit}}</td>
+         <td>{{conference.score}}</td>
+         <td class="m-1"><button class="btn btn-primary" (click)="openModal(conference,keynotesModal)">Voir</button></td>
+         <td class="m-1"><button class="btn btn-danger" (click)="deleteConference(conference)"><i class="bi bi-trash"></i></button></td>
+       </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<ng-template #keynotesModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Keynotes</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    {{ selectedConference?.keynotes }}
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.close()">Fermer</button>
+  </div>
+</ng-template>
