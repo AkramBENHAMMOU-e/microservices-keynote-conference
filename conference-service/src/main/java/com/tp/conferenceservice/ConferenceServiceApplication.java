@@ -40,7 +40,7 @@ public class ConferenceServiceApplication {
 
             List<Conference> conferences = List.of(Conference.builder()
                             .id(UUID.randomUUID())
-                            .date(LocalDateTime.now())
+                            .date(new java.sql.Date(2002,02,12))
                             .titre("MultiAgent")
                             .duree(60)
                             .nbreInscrit(200)
@@ -51,7 +51,7 @@ public class ConferenceServiceApplication {
                     .build(),
                     Conference.builder()
                             .id(UUID.randomUUID())
-                            .date(LocalDateTime.now())
+                            .date(new java.sql.Date(2002,02,12))
                             .titre("l'enseignement moderne")
                             .duree(30)
                             .nbreInscrit(300)

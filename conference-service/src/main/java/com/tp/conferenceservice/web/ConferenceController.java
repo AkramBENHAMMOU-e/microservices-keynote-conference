@@ -37,6 +37,9 @@ public class ConferenceController {
 
     @PostMapping("/conferences")
     public Conference addConference(@RequestBody Conference conference){
+        if (conference.getId() == null) {
+            conference.setId(UUID.randomUUID());
+        }
         return conferenceRepository.save(conference);
     }
     @PutMapping("/conferences/{id}")

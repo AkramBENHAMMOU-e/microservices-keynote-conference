@@ -139,5 +139,9 @@ export class ConferenceList implements OnInit {
   closeNewConference(){
     this.newConference = false;
   }
+
+  onconferenceAdded(conf: any) {
+    this.conferences.push(conf);
+  }
 }
 

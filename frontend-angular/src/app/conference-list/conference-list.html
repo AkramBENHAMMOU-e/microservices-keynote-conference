@@ -53,8 +53,8 @@
 
 </app-keynotes-conference-modale>
 
-<app-new-conference *ngIf="newConference" (close)="closeNewConference()"></app-new-conference>
-
+<app-new-conference *ngIf="newConference" (close)="closeNewConference()" (conferenceAdded)="onconferenceAdded($event)"></app-new-conference>
+<!-- $event : l'objet de l'evenement déclenché (valeur emise par @Output, click, submit...) -->
 <!--<div class="simple-modal-backdrop" *ngIf="showModal">
   <div class="simple-modal">
     <div class="modal-header">

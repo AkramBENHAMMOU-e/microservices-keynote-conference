@@ -6,10 +6,10 @@ import com.tp.conferenceservice.model.Keynote;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 @Entity @Builder @AllArgsConstructor @NoArgsConstructor @Getter @Setter
@@ -20,7 +20,7 @@ public class Conference {
     @Enumerated(EnumType.STRING)
     private ConferenceType type;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime date;
+    private Date date;
     private Integer duree;
     private int nbreInscrit;
     private float score;

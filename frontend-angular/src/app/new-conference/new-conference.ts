@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { ConferenceService } from '../services/conference.service';
 
@@ -8,10 +8,12 @@ import { ConferenceService } from '../services/conference.service';
   templateUrl: './new-conference.html',
   styleUrl: './new-conference.css',
 })
-export class NewConference {
+export class NewConference implements OnInit{
   public conferenceForm! : FormGroup;
 
+  @Output() conferenceAdded = new EventEmitter<any>();
   @Output() close = new EventEmitter();
+
 
   constructor(private fb: FormBuilder, private conferenceService: ConferenceService) {
   }
@@ -29,8 +31,14 @@ export class NewConference {
 
   saveConference() {
     let conference = this.conferenceForm.value;
+    console.log(conference.json);
+
     this.conferenceService.saveConfernce(conference).subscribe({
-      next: data  => alert(JSON.stringify(data)),
+      next: data  => {
+        this.conferenceAdded.emit(data); //envoyer l'objet ajouté au parent
+        this.close.emit();
+
+      },
       error: err => console.error(err)
     })
   }
