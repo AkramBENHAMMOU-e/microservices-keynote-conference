@@ -1,6 +1,8 @@
 package com.tp.conferenceservice.web;
 
 import com.tp.conferenceservice.entities.Conference;
+import com.tp.conferenceservice.feign.KeynoteRestClient;
+import com.tp.conferenceservice.model.Keynote;
 import com.tp.conferenceservice.repository.ConferenceRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,17 +11,23 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ConferenceController {
 
     private final ConferenceRepository conferenceRepository;
+    private final KeynoteRestClient keynoteRestClient;
 
-    public ConferenceController(ConferenceRepository conferenceRepository) {
+    public ConferenceController(ConferenceRepository conferenceRepository, KeynoteRestClient keynoteRestClient) {
         this.conferenceRepository = conferenceRepository;
+        this.keynoteRestClient = keynoteRestClient;
     }
 
     @GetMapping("/conferences")
     public List<Conference> getAllConferences(){
-        return conferenceRepository.findAll();
+       List<Conference> conferences = conferenceRepository.findAll();
+       List<Keynote> keynotes = keynoteRestClient.getAllKeynotes();
+       conferences.get(0).setKeynotes(keynotes);
+       return conferences;
     }
 
     @GetMapping("/conferences/{id}")

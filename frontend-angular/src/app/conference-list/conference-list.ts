@@ -1,25 +1,36 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
 import {ConferenceService} from '../services/conference.service';
 import {Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {KeynotesConferenceModale} from '../keynotes-conference-modale/keynotes-conference-modale';
+import {NewConference} from '../new-conference/new-conference';
+
 
 @Component({
-  selector: 'app-conference-list-component',
-  standalone: false,
-  templateUrl: './conference-list-component.html',
-  styleUrl: './conference-list-component.css',
+  selector: 'app-conference-list',
+  imports: [
+    CommonModule,
+    FormsModule,
+    KeynotesConferenceModale,
+    NewConference,
+    // pour [(ngModel)]
+  ],
+  standalone: true,
+  templateUrl: './conference-list.html',
+  styleUrl: './conference-list.css',
 })
-export class ConferenceListComponent implements OnInit{
-
+export class ConferenceList implements OnInit {
 
   conferences: Array<any> = [];
   allConferences: Array<any> = [];       // Copie originale
 
-  selectedConference : any
+  selectedConference : any = null;
+  newConference : boolean = false;
 
   public keyword : String = "";
 
-  constructor(private cd: ChangeDetectorRef,private modalService: NgbModal, private conferenceService:ConferenceService, private router:Router) {
+  constructor( private conferenceService:ConferenceService, private router:Router) {
 
   }
 
@@ -34,7 +45,6 @@ export class ConferenceListComponent implements OnInit{
         this.conferences = data || [];
         this.allConferences = data || [];  // Sauvegarder la copie originale
         console.log('Conferences chargées:', this.conferences.length);
-        this.cd.detectChanges();
       },
       error : err => {
         console.error('Erreur lors du chargement des conférences:', err);
@@ -42,14 +52,18 @@ export class ConferenceListComponent implements OnInit{
     });
   }
 
-  openModal(conf: any, content: any) {
-    this.selectedConference = conf;
-    this.modalService.open(content, { centered: true });
-  }
 
 
   deleteConference(conference: any) {
-    /*this.conferences = this.conferences.filter(c => c !== conference);*/
+    this.conferenceService.deleteConference(conference).subscribe(
+      {
+        next : data => {
+          //this.getAllConferences();
+
+          this.conferences = this.conferences.filter(c => c !== conference);
+        }
+      }
+    )
   }
 
   searchConference() {
@@ -66,11 +80,6 @@ export class ConferenceListComponent implements OnInit{
     this.conferences = this.allConferences.filter(conf =>
       conf.titre?.toLowerCase().includes(lower)
     );
-  }
-
-
-  goNewConference() {
-    this.router.navigate(['/newConference']);
   }
 
   formatDate(date: any): string {
@@ -113,4 +122,22 @@ export class ConferenceListComponent implements OnInit{
     }
     return String(duree);
   }
+
+
+  openModal(conf: any) {
+    this.selectedConference = conf;
+  }
+
+  closeModal(){
+    this.selectedConference = null;
+  }
+
+  openNewConference() {
+    this.newConference = true;
+  }
+
+  closeNewConference(){
+    this.newConference = false;
+  }
 }
+

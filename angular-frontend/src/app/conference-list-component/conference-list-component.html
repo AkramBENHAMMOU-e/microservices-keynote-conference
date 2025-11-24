@@ -1,8 +1,8 @@
-<div class="card mt-5 m-2">
-  <div class="card-header">
+<div class="card mt-5 m-1">
+<div class="card-header">
       <label class="form-label me-3">Recherche:</label>
-      <input type="text" class="form-control " style="width:80% ;display: inline" [(ngModel)]="keyword" placeholder="Search">
-      <button class="btn btn-primary ms-2" style="display: inline" (click)="searchConference()"><i class="bi bi-search"></i></button>
+    <input type="text" class="form-control" style="width: 80%; display: inline" [(ngModel)]="keyword" (input)="searchConference()" placeholder="Search...">
+    <button class="btn btn-success ms-5" style="display: inline" (click)="goNewConference()"><i class="bi bi-plus-circle-fill"></i></button>
   </div>
 
   <div class="card-body">
@@ -17,13 +17,14 @@
         <th>Score</th>
         <th>keynotes</th>
       </tr>
+      <p>Chargé : {{ conferences.length }}</p>
       </thead>
-      <tbody *ngIf="conferences">
+      <tbody>
        <tr class="m-4" *ngFor="let conference of conferences">
          <td>{{conference.titre}}</td>
          <td>{{conference.type}}</td>
-         <td>{{conference.date}}</td>
-         <td>{{conference.duree}}</td>
+         <td>{{formatDate(conference.date)}}</td>
+         <td>{{formatDuration(conference.duree)}}</td>
          <td>{{conference.nbreInscrit}}</td>
          <td>{{conference.score}}</td>
          <td class="m-1"><button class="btn btn-primary" (click)="openModal(conference,keynotesModal)">Voir</button></td>
@@ -41,7 +42,20 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
   <div class="modal-body">
-    {{ selectedConference?.keynotes }}
+    <div *ngIf="selectedConference?.keynotes && selectedConference.keynotes.length > 0; else noKeynotes">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let keynote of selectedConference.keynotes">
+          <div class="d-flex flex-column">
+            <strong>{{keynote.name}} {{keynote.prenom}}</strong>
+            <small class="text-muted">{{keynote.fonction}}</small>
+            <small class="text-muted">{{keynote.email}}</small>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <ng-template #noKeynotes>
+      <p class="text-muted">Aucun keynote associé à cette conférence.</p>
+    </ng-template>
   </div>
   <div class="modal-footer">
     <button class="btn btn-secondary" (click)="modal.close()">Fermer</button>

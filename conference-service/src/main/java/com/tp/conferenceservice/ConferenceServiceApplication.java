@@ -15,6 +15,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -39,9 +40,9 @@ public class ConferenceServiceApplication {
 
             List<Conference> conferences = List.of(Conference.builder()
                             .id(UUID.randomUUID())
-                            .date(new Date())
+                            .date(LocalDateTime.now())
                             .titre("MultiAgent")
-                            .duree(Duration.ofHours(1))
+                            .duree(60)
                             .nbreInscrit(200)
                             .score(2)
                             .type(ConferenceType.COMMERCIALE)
@@ -50,9 +51,9 @@ public class ConferenceServiceApplication {
                     .build(),
                     Conference.builder()
                             .id(UUID.randomUUID())
-                            .date(new Date())
+                            .date(LocalDateTime.now())
                             .titre("l'enseignement moderne")
-                            .duree(Duration.ofHours(1))
+                            .duree(30)
                             .nbreInscrit(300)
                             .score(4)
                             .type(ConferenceType.ACADEMIQUE)
@@ -69,6 +70,7 @@ public class ConferenceServiceApplication {
                             .conference(conferences.get(1))
                             .build());
             reviews.forEach(review -> reviewRepository.saveReview(review));
+
         };
     }
 

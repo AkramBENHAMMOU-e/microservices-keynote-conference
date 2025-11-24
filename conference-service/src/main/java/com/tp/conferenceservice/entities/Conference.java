@@ -1,11 +1,13 @@
 package com.tp.conferenceservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tp.conferenceservice.enums.ConferenceType;
 import com.tp.conferenceservice.model.Keynote;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +19,9 @@ public class Conference {
     private String titre;
     @Enumerated(EnumType.STRING)
     private ConferenceType type;
-    private Date date;
-    private Duration duree;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime date;
+    private Integer duree;
     private int nbreInscrit;
     private float score;
     @OneToMany(mappedBy = "conference", fetch = FetchType.LAZY)

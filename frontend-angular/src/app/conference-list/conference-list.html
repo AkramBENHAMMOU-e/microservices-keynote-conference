@@ -1,0 +1,85 @@
+<div class="card mt-5 m-1">
+  <div class="card-header">
+    <label class="form-label me-3">Recherche:</label>
+    <input type="text" class="form-control" style="width: 80%; display: inline" [(ngModel)]="keyword"
+           (input)="searchConference()" placeholder="Search...">
+    <button class="btn btn-success ms-5" style="display: inline"  (click)="openNewConference()">
+      <i class="bi bi-plus-circle-fill"></i>
+    </button>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Durée</th>
+        <th>Nombre Inscrits</th>
+        <th>Score</th>
+        <th>keynotes</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="m-4" *ngFor="let conference of conferences">
+        <td>{{conference.titre}}</td>
+        <td>{{conference.type}}</td>
+        <td>{{conference.date}}</td>
+        <td>{{conference.duree}}</td>
+        <td>{{conference.nbreInscrit}}</td>
+        <td>{{conference.score}}</td>
+        <td class="m-1">
+          <button class="btn btn-primary" (click)="openModal(conference)">Voir</button>
+        </td>
+        <td class="m-1">
+          <button class="btn btn-danger" (click)="deleteConference(conference)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!--       SIMPLE MODAL (no lib)     -->
+<!-- ============================== -->
+
+
+<app-keynotes-conference-modale *ngIf="selectedConference"
+                                [conference]="selectedConference" (close) = "closeModal()">
+
+</app-keynotes-conference-modale>
+
+<app-new-conference *ngIf="newConference" (close)="closeNewConference()"></app-new-conference>
+
+<!--<div class="simple-modal-backdrop" *ngIf="showModal">
+  <div class="simple-modal">
+    <div class="modal-header">
+      <h5>Keynotes</h5>
+      <button class="btn-close" (click)="closeModal()"></button>
+    </div>
+
+    <div class="modal-body">
+      <div *ngIf="selectedConference?.keynotes?.length > 0; else noKeynotes">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let keynote of selectedConference.keynotes">
+            <strong>{{ keynote.name }} {{ keynote.prenom }}</strong><br>
+            <small class="text-muted">{{ keynote.fonction }}</small><br>
+            <small class="text-muted">{{ keynote.email }}</small>
+          </li>
+        </ul>
+      </div>
+
+      <ng-template #noKeynotes>
+        <p class="text-muted">Aucun keynote associé à cette conférence.</p>
+      </ng-template>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeModal()">Fermer</button>
+    </div>
+  </div>
+</div>-->
