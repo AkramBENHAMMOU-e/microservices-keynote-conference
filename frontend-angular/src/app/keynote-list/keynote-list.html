@@ -1,6 +1,11 @@
 <div class="card">
   <div class="card-header">
-    Liste des keynotes
+    <label class="form-label me-2">Chercher un Keynote : </label>
+    <input type="text" class="form-control" [(ngModel)]="keyword" style="width: 80%; display: inline"
+           (input)="searchKeynote()">
+    <button class="btn btn-success ms-5" style="display: inline" (click)="openNewKeynote()">
+      <i class="bi bi-person-add"></i>
+    </button>
   </div>
   <div class="card-body">
     <table class="table table-hover">
@@ -10,6 +15,7 @@
           <th>Prénom</th>
           <th>Email</th>
           <th>Fonction</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +24,11 @@
         <td>{{keynote.prenom}}</td>
         <td>{{keynote.email}}</td>
         <td>{{keynote.fonction}}</td>
+        <td>
+        <button class="btn btn-danger" (click)="deleteKeynote(keynote)">
+          <i class="bi bi-trash"></i>
+        </button>
+        </td>
       </tr>
       </tbody>
     </table>

@@ -66,63 +66,21 @@ export class ConferenceList implements OnInit {
     )
   }
 
-  searchConference() {
-    if (!this.allConferences || this.allConferences.length === 0) {
-      return; // Empêche d'écraser la liste avant chargement
-    }
-
-    if (!this.keyword.trim()) {
-      this.conferences = [...this.allConferences];
-      return;
-    }
-
-    const lower = this.keyword.toLowerCase();
-    this.conferences = this.allConferences.filter(conf =>
-      conf.titre?.toLowerCase().includes(lower)
-    );
-  }
-
-  formatDate(date: any): string {
-    if (!date) return '';
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString('fr-FR', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  }
-
-  formatDuration(duree: any): string {
-    if (!duree) return '';
-    // Si c'est déjà une string formatée comme "PT1H"
-    if (typeof duree === 'string') {
-      if (duree.startsWith('PT')) {
-        const match = duree.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-        if (match) {
-          const hours = match[1] ? parseInt(match[1]) : 0;
-          const minutes = match[2] ? parseInt(match[2]) : 0;
-          const parts = [];
-          if (hours > 0) parts.push(`${hours} heure${hours > 1 ? 's' : ''}`);
-          if (minutes > 0) parts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
-          return parts.join(' et ') || '0 minute';
-        }
+    searchConference() {
+      if (!this.allConferences || this.allConferences.length === 0) {
+        return; // Empêche d'écraser la liste avant chargement
       }
-      return duree;
-    }
-    // Si c'est un objet avec des propriétés (duration en Java)
-    if (duree.hours !== undefined || duree.minutes !== undefined) {
-      const hours = duree.hours || 0;
-      const minutes = duree.minutes || 0;
-      const parts = [];
-      if (hours > 0) parts.push(`${hours} heure${hours > 1 ? 's' : ''}`);
-      if (minutes > 0) parts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
-      return parts.join(' et ') || '0 minute';
-    }
-    return String(duree);
-  }
 
+      if (!this.keyword.trim()) {
+        this.conferences = [...this.allConferences];
+        return;
+      }
+
+      const lower = this.keyword.toLowerCase();
+      this.conferences = this.allConferences.filter(conf =>
+        conf.titre?.toLowerCase().includes(lower)
+      );
+    }
 
   openModal(conf: any) {
     this.selectedConference = conf;

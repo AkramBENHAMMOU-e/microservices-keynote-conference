@@ -1,7 +1,7 @@
-<div class="card mt-5 m-1">
+<div class="card">
   <div class="card-header">
-    <label class="form-label me-3">Recherche:</label>
-    <input type="text" class="form-control" style="width: 80%; display: inline" [(ngModel)]="keyword"
+    <label class="form-label me-2">Chercher une Conference :</label>
+    <input type="text" class="form-control" style="width: 78%; display: inline" [(ngModel)]="keyword"
            (input)="searchConference()" placeholder="Search...">
     <button class="btn btn-success ms-5" style="display: inline"  (click)="openNewConference()">
       <i class="bi bi-plus-circle-fill"></i>

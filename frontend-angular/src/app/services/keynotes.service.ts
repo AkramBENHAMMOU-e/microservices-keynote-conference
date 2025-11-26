@@ -14,4 +14,7 @@ export class KeynotesService {
     return this.http.get<Array<any>>('http://localhost:8081/keynotes');
   }
 
+  deleteKeynote(keynote: any) {
+    return this.http.delete<any>(`http://localhost:8081/keynotes/${keynote.id}`);
+  }
 }
