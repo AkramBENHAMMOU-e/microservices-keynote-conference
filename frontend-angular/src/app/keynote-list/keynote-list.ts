@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {KeynotesService} from '../services/keynotes.service';
 import {NgForOf,CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {NewKeynote} from '../new-keynote/new-keynote';
+
 
 @Component({
   selector: 'app-keynote-list',
   imports: [
-    NgForOf, CommonModule, FormsModule
+    NgForOf, CommonModule, FormsModule, NewKeynote
   ],
   templateUrl: './keynote-list.html',
   styleUrl: './keynote-list.css',
@@ -16,6 +18,7 @@ export class KeynoteList implements OnInit{
   keynotes : Array<any> = [];
   keynoteList : Array<any> = [];
   keyword: any;
+  selectedKeynote : boolean = false;
 
 
   constructor(private keynoteService : KeynotesService) {
@@ -51,9 +54,6 @@ export class KeynoteList implements OnInit{
     );
   }
 
-  openNewKeynote() {
-
-  }
 
   deleteKeynote(keynote: any) {
 
@@ -65,4 +65,17 @@ export class KeynoteList implements OnInit{
     })
 
   }
+
+  closeModal(){
+    this.selectedKeynote = false;
+  }
+
+  openNewKeynote() {
+    this.selectedKeynote = true;
+  }
+
+  onKeynoteAdded(keynote: any) {
+    this.keynotes.push(keynote);
+  }
+
 }

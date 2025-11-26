@@ -11,7 +11,6 @@
   z-index: 1000;
 }
 
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -23,14 +22,22 @@
   }
 }
 
-
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
 
 form {
   padding: 20px;
   overflow-y: auto;
   flex: 1;
 }
-
 
 
 .form-label {
@@ -60,41 +67,11 @@ form {
 
 button.btn-success {
   width: 100%;
-  margin-top: 4px;
-  height: 42px;
   font-size: 15px;
-  font-weight: 500;
   background: #10b981;
-  color: white;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
 }
 
 button.btn-success:hover {
   background: #059669;
-}
-
-button.btn-success:active {
-  transform: scale(0.98);
-}
-
-/* Scrollbar personnalisée pour le formulaire */
-form::-webkit-scrollbar {
-  width: 6px;
-}
-
-form::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-form::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 10px;
-}
-
-form::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
 }

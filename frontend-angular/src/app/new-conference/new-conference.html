@@ -1,6 +1,6 @@
 <div class="overlay">
-  <div class="modal-box">
-    <div class="card-header">Ajouter une conference
+  <div class="card" style="width: 40%;">
+    <div class="card-header" style="display: flex; justify-content: space-between">Ajouter une conference
       <button type="button" class="btn-close" aria-label="Close" (click)="close.emit()"></button>
     </div>
       <form [formGroup]="conferenceForm" (ngSubmit)="saveConference()">

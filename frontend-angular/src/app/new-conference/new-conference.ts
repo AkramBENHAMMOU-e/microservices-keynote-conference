@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ConferenceService } from '../services/conference.service';
 import {CommonModule} from '@angular/common';
 
@@ -20,10 +20,10 @@ export class NewConference implements OnInit{
   }
   ngOnInit(){
     this.conferenceForm = this.fb.group({
-      titre: this.fb.control(""),
-      type: this.fb.control(""),
-      date: this.fb.control("") ,
-      duree: this.fb.control(0),
+      titre: this.fb.control("", Validators.required),
+      type: this.fb.control("", Validators.required),
+      date: this.fb.control("", Validators.required) ,
+      duree: this.fb.control(0, Validators.required),
       nbreInscrit: this.fb.control(0),
       score: this.fb.control(0)
     });
@@ -34,15 +34,19 @@ export class NewConference implements OnInit{
   saveConference() {
     let conference = this.conferenceForm.value;
     console.log(conference.json);
+    if (this.conferenceForm.valid) {
+      this.conferenceService.saveConfernce(conference).subscribe({
+        next: data => {
+          this.conferenceAdded.emit(data); //envoyer l'objet ajouté au parent
+          this.close.emit();
 
-    this.conferenceService.saveConfernce(conference).subscribe({
-      next: data  => {
-        this.conferenceAdded.emit(data); //envoyer l'objet ajouté au parent
-        this.close.emit();
-
-      },
-      error: err => console.error(err)
-    })
+        },
+        error: err => console.error(err)
+      })
+    }
+    else {
+      alert("Veuillez remplir tous les champs");
+    }
   }
 
   getTypes() : any {

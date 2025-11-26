@@ -1,0 +1,25 @@
+
+<div class="overlay">
+  <div class="card" style="width: 30%;">
+    <div class="card-header">Ajouter une conference
+      <button type="button" class="btn-close" aria-label="Close" style="display: flex; justify-content: space-between "
+      (click)="close.emit()"
+      ></button>
+    </div>
+    <form [formGroup]="keynoteForm" (submit)="saveKeynote()" class="m-2">
+        <div class="mb-3">
+          <input type="text" formControlName="name" placeholder="Nom" class="form-control" >
+        </div>
+        <div class="mb-3">
+          <input type="text" formControlName="prenom" placeholder="prenom" class="form-control" >
+        </div>
+        <div class="mb-3">
+          <input type="text" formControlName="email" placeholder="email" class="form-control" >
+        </div>
+        <div class="mb-3">
+          <input type="text" formControlName="fonction" placeholder="fonction" class="form-control" >
+        </div>
+        <button type="submit" class="btn btn-success"><i class="bi bi-save"></i></button>
+    </form>
+  </div>
+</div>

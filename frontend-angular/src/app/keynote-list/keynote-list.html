@@ -34,3 +34,5 @@
     </table>
   </div>
 </div>
+
+<app-new-keynote *ngIf="selectedKeynote" (close)="closeModal()" (keynoteAdded) = "onKeynoteAdded($event)" ></app-new-keynote>

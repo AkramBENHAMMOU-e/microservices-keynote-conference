@@ -8,5 +8,5 @@ import java.util.UUID;
 
 @RepositoryRestResource
 public interface ConferenceRepository extends JpaRepository<Conference, UUID> {
-    Conference findByTitre(String titre);
+
 }

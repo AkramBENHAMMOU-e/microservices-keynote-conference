@@ -24,6 +24,8 @@ public class Conference {
     private Integer duree;
     private int nbreInscrit;
     private float score;
+    @ElementCollection
+    private List<UUID> keynoteIds = new ArrayList<>();
     @OneToMany(mappedBy = "conference", fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
     @Transient

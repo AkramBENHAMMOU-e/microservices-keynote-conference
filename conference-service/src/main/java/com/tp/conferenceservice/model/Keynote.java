@@ -1,7 +1,5 @@
 package com.tp.conferenceservice.model;
 
-import com.tp.conferenceservice.entities.Conference;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 import java.util.UUID;

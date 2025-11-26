@@ -5,6 +5,7 @@ import com.tp.conferenceservice.enums.ConferenceType;
 import com.tp.conferenceservice.feign.KeynoteRestClient;
 import com.tp.conferenceservice.model.Keynote;
 import com.tp.conferenceservice.repository.ConferenceRepository;
+import com.tp.conferenceservice.services.ConferenceService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,10 +18,12 @@ public class ConferenceController {
 
     private final ConferenceRepository conferenceRepository;
     private final KeynoteRestClient keynoteRestClient;
+    private final ConferenceService conferenceService;
 
-    public ConferenceController(ConferenceRepository conferenceRepository, KeynoteRestClient keynoteRestClient) {
+    public ConferenceController(ConferenceRepository conferenceRepository, KeynoteRestClient keynoteRestClient, ConferenceService conferenceService) {
         this.conferenceRepository = conferenceRepository;
         this.keynoteRestClient = keynoteRestClient;
+        this.conferenceService = conferenceService;
     }
 
     @GetMapping("/conferences")
@@ -64,5 +67,16 @@ public class ConferenceController {
     @GetMapping("/types")
     public List<ConferenceType> getAllTypes(){
         return List.of(ConferenceType.values());
+    }
+
+    @GetMapping("/conferences/{confId}/keynotes")
+    public List<Keynote> getKeynotesByConferenceId(@PathVariable UUID confId){
+        List<UUID> keynotesIds = conferenceRepository.findById(confId).get().getKeynoteIds();
+        return keynoteRestClient.getAllKeynotes().stream().filter(keynote -> keynotesIds.contains(keynote.getId())).toList();
+    }
+
+    @PostMapping("/conferences/{confId}/keynotes")
+    public Conference addKeynoteToConference(@PathVariable UUID confId,@RequestBody List<UUID> keynoteIds){
+        return conferenceService.assigneKeynotesToConference(keynoteIds,confId);
     }
 }
