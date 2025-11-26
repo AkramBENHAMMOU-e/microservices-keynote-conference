@@ -1,6 +1,7 @@
 package com.tp.conferenceservice.web;
 
 import com.tp.conferenceservice.entities.Conference;
+import com.tp.conferenceservice.enums.ConferenceType;
 import com.tp.conferenceservice.feign.KeynoteRestClient;
 import com.tp.conferenceservice.model.Keynote;
 import com.tp.conferenceservice.repository.ConferenceRepository;
@@ -59,4 +60,9 @@ public class ConferenceController {
         conferenceRepository.deleteById(id);
     }
 
+
+    @GetMapping("/types")
+    public List<ConferenceType> getAllTypes(){
+        return List.of(ConferenceType.values());
+    }
 }

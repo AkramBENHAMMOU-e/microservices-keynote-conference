@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { ConferenceService } from '../services/conference.service';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-new-conference',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './new-conference.html',
   styleUrl: './new-conference.css',
 })
@@ -13,7 +14,7 @@ export class NewConference implements OnInit{
 
   @Output() conferenceAdded = new EventEmitter<any>();
   @Output() close = new EventEmitter();
-
+  types!: Array<any>;
 
   constructor(private fb: FormBuilder, private conferenceService: ConferenceService) {
   }
@@ -26,6 +27,7 @@ export class NewConference implements OnInit{
       nbreInscrit: this.fb.control(0),
       score: this.fb.control(0)
     });
+    this.types = this.getTypes();
   }
 
 
@@ -40,6 +42,12 @@ export class NewConference implements OnInit{
 
       },
       error: err => console.error(err)
+    })
+  }
+
+  getTypes() : any {
+    this.conferenceService.getTypes().subscribe({
+      next: data  => this.types = data,
     })
   }
 }

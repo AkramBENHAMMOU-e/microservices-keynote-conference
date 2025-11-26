@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class KeynoteController {
     private KeynoteRepository keynoteRepository;
     public KeynoteController(KeynoteRepository keynoteRepository) {

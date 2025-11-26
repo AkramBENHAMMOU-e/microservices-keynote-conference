@@ -20,4 +20,9 @@ export class ConferenceService {
   public deleteConference(conference: any){
     return this.http.delete<any>(`http://localhost:8082/api/conferences/${conference.id}`);
   }
+
+
+  public getTypes() : Observable<Array<any>> {
+    return this.http.get<Array<any>>('http://localhost:8082/api/types');
+  }
 }
