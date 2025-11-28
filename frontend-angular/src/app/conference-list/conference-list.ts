@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {ConferenceService} from '../services/conference.service';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
@@ -27,6 +27,8 @@ export class ConferenceList implements OnInit {
 
   selectedConference : any = null;
   newConference : boolean = false;
+
+  editedConference! :any;
 
   public keyword : String = "";
 
@@ -99,7 +101,20 @@ export class ConferenceList implements OnInit {
   }
 
   onconferenceAdded(conf: any) {
-    this.conferences.push(conf);
+    const index = this.conferences.findIndex(c => c.id === conf.id);
+    //indexOf n'utilise que sur des types primitifs , là on a utilisé FindIndex, pour reprendre l'objet
+    if(index !== -1){
+      this.conferences[index] = conf;
+    }
+    else {
+      this.conferences.push(conf);
+    }
+
+  }
+
+  editConference(conference: any) {
+    this.editedConference = conference;
+    this.newConference = true;
   }
 }
 

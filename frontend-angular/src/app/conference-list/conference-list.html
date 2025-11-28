@@ -37,6 +37,11 @@
             <i class="bi bi-trash"></i>
           </button>
         </td>
+        <td class="m-1">
+          <button class="btn btn-warning" (click)="editConference(conference)">
+            <i class="bi bi-pencil"></i>
+          </button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -53,7 +58,9 @@
 
 </app-keynotes-conference-modale>
 
-<app-new-conference *ngIf="newConference" (close)="closeNewConference()" (conferenceAdded)="onconferenceAdded($event)"></app-new-conference>
+<app-new-conference *ngIf="newConference" (close)="closeNewConference()"
+                    (conferenceSaved)="onconferenceAdded($event)"
+                    [conferenceToEdit]="editedConference"></app-new-conference>
 <!-- $event : l'objet de l'evenement déclenché (valeur emise par @Output, click, submit...) -->
 <!--<div class="simple-modal-backdrop" *ngIf="showModal">
   <div class="simple-modal">

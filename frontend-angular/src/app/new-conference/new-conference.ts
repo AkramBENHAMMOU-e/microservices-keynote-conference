@@ -12,9 +12,11 @@ import {CommonModule} from '@angular/common';
 export class NewConference implements OnInit{
   public conferenceForm! : FormGroup;
 
-  @Output() conferenceAdded = new EventEmitter<any>();
+  @Output() conferenceSaved = new EventEmitter<any>();
   @Output() close = new EventEmitter();
   types!: Array<any>;
+
+  @Input() conferenceToEdit!: any;
 
   constructor(private fb: FormBuilder, private conferenceService: ConferenceService) {
   }
@@ -28,26 +30,42 @@ export class NewConference implements OnInit{
       score: this.fb.control(0)
     });
     this.types = this.getTypes();
+    if(this.conferenceToEdit) {
+      console.log("conferenceToEdit:", this.conferenceToEdit.id);
+      this.conferenceForm.patchValue(this.conferenceToEdit);
+    }
   }
 
 
   saveConference() {
-    let conference = this.conferenceForm.value;
-    console.log(conference.json);
-    if (this.conferenceForm.valid) {
-      this.conferenceService.saveConfernce(conference).subscribe({
+    if (this.conferenceForm.invalid) {
+      alert("Veuillez remplir tous les champs");
+    }
+
+    let newconference = this.conferenceForm.value;
+
+    if(this.conferenceToEdit) {
+      this.conferenceService.updateConference(this.conferenceToEdit,newconference).subscribe(
+        {
+          next:data => {
+            this.conferenceSaved.emit(data);
+            this.close.emit();
+          }
+        }
+      )
+    }
+    else {
+      this.conferenceService.saveConfernce(newconference).subscribe({
         next: data => {
-          this.conferenceAdded.emit(data); //envoyer l'objet ajouté au parent
+          this.conferenceSaved.emit(data); //envoyer l'objet ajouté au parent
           this.close.emit();
 
         },
         error: err => console.error(err)
       })
     }
-    else {
-      alert("Veuillez remplir tous les champs");
     }
-  }
+
 
   getTypes() : any {
     this.conferenceService.getTypes().subscribe({

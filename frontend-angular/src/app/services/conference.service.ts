@@ -37,4 +37,8 @@ export class ConferenceService {
   public deleteKeynoteFromConference(conferenceId : String, keynoteId : String) : Observable<any> {
       return this.http.delete<any>(`http://localhost:8082/api/conferences/${conferenceId}/keynotes/${keynoteId}`);
   }
+
+  public updateConference(conference: any, newConference: any) : Observable<any> {
+    return this.http.put<any>(`http://localhost:8082/api/conferences/${conference.id}`, newConference);
+  }
 }

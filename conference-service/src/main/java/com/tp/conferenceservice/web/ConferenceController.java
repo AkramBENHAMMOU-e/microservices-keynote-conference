@@ -52,6 +52,7 @@ public class ConferenceController {
         c.setTitre(conference.getTitre());
         c.setDuree(conference.getDuree());
         c.setNbreInscrit(conference.getNbreInscrit());
+        c.setDate(conference.getDate());
         c.setScore(conference.getScore());
         c.setType(conference.getType());
         c.setKeynotes(conference.getKeynotes());
