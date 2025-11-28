@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {KeynotesService} from '../services/keynotes.service';
 import {NgForOf,CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {NewKeynote} from '../new-keynote/new-keynote';
+import {Keynote} from '../models/Keynote';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class KeynoteList implements OnInit{
   keynoteList : Array<any> = [];
   keyword: any;
   selectedKeynote : boolean = false;
-
+  editKeynote! : Keynote;
 
   constructor(private keynoteService : KeynotesService) {
   }
@@ -75,7 +76,20 @@ export class KeynoteList implements OnInit{
   }
 
   onKeynoteAdded(keynote: any) {
-    this.keynotes.push(keynote);
+    const index = this.keynotes.findIndex(k => k.id === keynote.id);
+    if (index === -1) { //si le keynote n'existe pas alors indice => -1
+      //Operation d'ajout
+      this.keynotes.push(keynote);
+    }
+    else{
+      this.keynotes[index] = keynote;
+    }
+
+
   }
 
+  changeKeynote(keynote: any) {
+    this.editKeynote = keynote;
+    this.selectedKeynote = true;
+  }
 }

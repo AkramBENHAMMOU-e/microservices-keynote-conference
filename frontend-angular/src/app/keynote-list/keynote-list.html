@@ -28,6 +28,9 @@
         <button class="btn btn-danger" (click)="deleteKeynote(keynote)">
           <i class="bi bi-trash"></i>
         </button>
+          <button class="btn btn-warning ms-2" (click)="changeKeynote(keynote)">
+            <i class="bi bi-pencil"></i>
+          </button>
         </td>
       </tr>
       </tbody>
@@ -35,4 +38,8 @@
   </div>
 </div>
 
-<app-new-keynote *ngIf="selectedKeynote" (close)="closeModal()" (keynoteAdded) = "onKeynoteAdded($event)" ></app-new-keynote>
+<app-new-keynote *ngIf="selectedKeynote" (close)="closeModal()"
+                 (keynoteSaved) = "onKeynoteAdded($event)"
+                  [keynoteToEdit]="editKeynote">
+
+</app-new-keynote>
