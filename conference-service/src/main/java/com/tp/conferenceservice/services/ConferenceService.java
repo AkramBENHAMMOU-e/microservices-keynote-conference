@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ConferenceService {
@@ -26,6 +27,15 @@ public class ConferenceService {
         conf.setKeynoteIds(keynoteIds);
 
         return conferenceRepository.save(conf);
+    }
+
+    public void deleteKeynoteFromConference(UUID conferenceId, UUID keynoteId) {
+        Conference conf = conferenceRepository.findById(conferenceId).orElseThrow();
+        conf.setKeynoteIds(conf.getKeynoteIds()
+                .stream()
+                .filter(id -> !id.equals(keynoteId))
+                .collect(Collectors.toList()));
+        conferenceRepository.save(conf);
     }
 
 }

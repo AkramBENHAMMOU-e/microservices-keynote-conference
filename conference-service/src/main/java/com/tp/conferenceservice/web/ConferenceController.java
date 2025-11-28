@@ -79,4 +79,9 @@ public class ConferenceController {
     public Conference addKeynoteToConference(@PathVariable UUID confId,@RequestBody List<UUID> keynoteIds){
         return conferenceService.assigneKeynotesToConference(keynoteIds,confId);
     }
+
+    @DeleteMapping("/conferences/{confId}/keynotes/{keynoteId}")
+    public void deleteKeynoteFromConference(@PathVariable UUID confId,@PathVariable UUID keynoteId){
+        conferenceService.deleteKeynoteFromConference(confId,keynoteId);
+    }
 }

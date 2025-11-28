@@ -17,4 +17,8 @@ export class KeynotesService {
   deleteKeynote(keynote: any) {
     return this.http.delete<any>(`http://localhost:8081/keynotes/${keynote.id}`);
   }
+
+  saveKeynote(keynote: any) {
+    return this.http.post<any>('http://localhost:8081/keynotes', keynote);
+  }
 }

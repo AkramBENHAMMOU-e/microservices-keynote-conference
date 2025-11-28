@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {KeynotesService} from '../services/keynotes.service';
 
 @Component({
   selector: 'app-new-keynote',
@@ -17,7 +18,7 @@ export class NewKeynote implements OnInit{
   @Output() close = new EventEmitter();
 
 
-  constructor(private fb : FormBuilder) {
+  constructor(private fb : FormBuilder, private keynoteService: KeynotesService) {
   }
 
   ngOnInit() {
@@ -33,8 +34,15 @@ export class NewKeynote implements OnInit{
 
   saveKeynote() {
     if (this.keynoteForm.valid) {
-      this.keynoteAdded.emit(this.keynoteForm.value);
-      this.close.emit();
+      this.keynoteService.saveKeynote(this.keynoteForm.value).subscribe(
+        {
+          next : data => {
+            this.keynoteAdded.emit(data);
+            this.close.emit();
+          },
+          error : err => console.error(err)
+        }
+      );
     }
     else {
       alert("Veuillez remplir tous les champs");

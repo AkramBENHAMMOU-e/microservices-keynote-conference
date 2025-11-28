@@ -1,30 +1,67 @@
-<div class="overlay">
-  <div class="modal-box">
-    <h3>{{ conference.titre }}</h3>
+<div class="modal fade show d-block" tabindex="-1" style="background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
 
-    <table class="table table-hover" *ngIf="conference.keynotes?.length > 0; else noKeynotes">
-      <thead>
-        <th>Nom</th><th>Prenom</th><th>Email</th><th>Fonction</th>
-      </thead>
+      <div class="modal-header">
+        <h5 class="modal-title w-100 text-center ">{{ conference?.titre }}</h5>
+        <button type="button" class="btn btn-light"
+                aria-label="Close" (click)="close.emit()">
+          <i class="bi bi-x-circle"></i>
+        </button>
+      </div>
 
+      <div class="modal-body">
 
-    <tbody *ngFor="let k of conference.keynotes">
-      <tr>
-        <td>{{ k.name }}</td>
-        <td>{{ k.prenom }}</td>
-        <td>{{ k.email }}</td>
-        <td>{{ k.fonction }}</td>
-      </tr>
+        <div *ngIf="conference?.keynotes && conference.keynotes.length > 0; else noKeynotes">
+          <table class="table table-striped table-hover">
+            <thead class="table-light">
+            <tr>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>Email</th>
+              <th>Fonction</th>
+              <th>Retirer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let k of conference.keynotes">
+              <td>{{ k.name }}</td>
+              <td>{{ k.prenom }}</td>
+              <td>{{ k.email }}</td>
+              <td>{{ k.fonction }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="retireKeynote(k)">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
 
-    </tbody>
-    </table>
+        <ng-template #noKeynotes>
+          <div class="alert alert-secondary text-center">
+            Aucun keynote associé à cette conférence.
+          </div>
+        </ng-template>
 
-    <ng-template #noKeynotes>
-      <p style="text-align:center; padding: 15px; color:#555;">
-        Aucun keynote associé à cette conférence.
-      </p>
-    </ng-template>
+      </div>
 
-    <button (click)="close.emit()">Fermer</button>
+      <div class="modal-footer flex-column align-items-start">
+        <label for="keynoteSelect" class="form-label mb-2">Ajouter un Keynote (Cliquez pour ajouter)</label>
+
+        <select id="keynoteSelect"
+                class="form-select"
+                size="5"
+                (change)="selectKeynote($event)">
+          <option *ngFor="let k of keynotes" [value]="k.id">
+            {{ k.name }} {{ k.prenom }}
+          </option>
+        </select>
+
+        <small class="text-muted">Sélectionnez une personne pour l'ajouter immédiatement.</small>
+      </div>
+
+    </div>
   </div>
 </div>

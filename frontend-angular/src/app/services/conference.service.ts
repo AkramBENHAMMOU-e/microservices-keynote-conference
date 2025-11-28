@@ -25,4 +25,16 @@ export class ConferenceService {
   public getTypes() : Observable<Array<any>> {
     return this.http.get<Array<any>>('http://localhost:8082/api/types');
   }
+
+  public getKeynotesByConference(confId : String) : Observable<Array<any>> {
+    return this.http.get<Array<any>>(`http://localhost:8082/api/conferences/${confId}/keynotes`);
+  }
+
+  public addKeynoteToConference(conferenceId : String, keynoteId : Array<any>) : Observable<any> {
+    return this.http.post<any>(`http://localhost:8082/api/conferences/${conferenceId}/keynotes`, keynoteId)
+  }
+
+  public deleteKeynoteFromConference(conferenceId : String, keynoteId : String) : Observable<any> {
+      return this.http.delete<any>(`http://localhost:8082/api/conferences/${conferenceId}/keynotes/${keynoteId}`);
+  }
 }

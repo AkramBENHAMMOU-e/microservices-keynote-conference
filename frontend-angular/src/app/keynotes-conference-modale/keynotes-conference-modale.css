@@ -26,20 +26,4 @@
 }
 
 
-button {
-  width: 100%;
-  padding: 12px;
-  background: #4f46e5;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.2s;
-  margin-top: 15px;
-}
-
-button:hover {
-  background: #4338ca;
-}
 
