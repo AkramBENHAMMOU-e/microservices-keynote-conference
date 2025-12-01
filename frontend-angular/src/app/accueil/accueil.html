@@ -1,0 +1,65 @@
+<div id="carouselConferences" class="carousel slide" data-bs-ride="carousel">
+
+  <div class="carousel-indicators">
+    <button type="button" *ngFor="let conf of conferences; let i = index"
+            data-bs-target="#carouselConferences" [attr.data-bs-slide-to]="i"
+            [class.active]="i === 0" [attr.aria-label]="'Slide ' + (i + 1)">
+    </button>
+  </div>
+
+  <div class="carousel-inner">
+    <div class="carousel-item" *ngFor="let conf of conferences; let i = index" [class.active]="i === 0">
+
+      <div class="conf-slide" [ngClass]="'slide-' + color[i % color.length]">
+
+        <div class="decorative-circle circle-1"></div>
+        <div class="decorative-circle circle-2"></div>
+
+        <div class="container">
+          <div class="glass-card">
+            <div class="row align-items-center">
+
+              <div class="col-lg-8 text-lg-start text-center mb-4 mb-lg-0">
+                <span class="badge rounded-pill bg-white text-primary mb-3 px-3 py-2 fw-bold text-uppercase">
+                  {{conf.type}}
+                </span>
+
+                <h1 class="display-5 fw-bold mb-3">{{conf.titre}}</h1>
+
+                <div class="speakers-list mb-4">
+                  <div class="d-inline-block me-3" *ngFor="let k of conf.keynotes">
+                    <div class="d-flex align-items-center speaker-item">
+                      <div class="icon-box me-2"><i class="bi bi-mic-fill"></i></div>
+                      <span class="fw-light">{{k.name}} {{k.prenom}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="btn btn-light btn-lg px-4 rounded-pill fw-bold shadow-sm action-btn">
+                  Voir les détails <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+              </div>
+
+              <div class="col-lg-4 d-flex justify-content-center justify-content-lg-end">
+                <div class="date-badge-big">
+                  <span class="month">{{ conf.date | date:'MMMM' | uppercase }}</span>
+                  <span class="day">{{ conf.date | date:'dd' }}</span>
+                  <span class="year">{{ conf.date | date:'yyyy' }}</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselConferences" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselConferences" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
