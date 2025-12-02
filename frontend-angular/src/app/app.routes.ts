@@ -1,12 +1,27 @@
 import { Routes } from '@angular/router';
-import {ConferenceList} from './conference-list/conference-list';
-import {NewConference} from './new-conference/new-conference';
-import {KeynoteList} from './keynote-list/keynote-list';
-import {Accueil} from './accueil/accueil';
+import { ConferenceList } from './conference-list/conference-list';
+import { NewConference } from './new-conference/new-conference';
+import { KeynoteList } from './keynote-list/keynote-list';
+import { Accueil } from './accueil/accueil';
+import { canActivateAuthRole } from './guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  {path: 'home' , component:Accueil},
-  {path: 'conferenceList' , component:ConferenceList},
-  {path: 'keynoteList' , component:KeynoteList}
+
+  { path: 'home', component: Accueil },
+
+  { path: 'conferenceList', component: ConferenceList },
+
+  {
+    path: 'keynoteList',
+    component: KeynoteList,
+    canActivate: [canActivateAuthRole],
+    data: { roles: ['ADMIN'] }
+  },
+  {
+    path: 'forbidden',
+    loadComponent: () =>
+      import('./forbidden/forbidden').then(m => m.Forbidden)
+  },
+  { path: '**', redirectTo: '/forbidden' }
 ];
