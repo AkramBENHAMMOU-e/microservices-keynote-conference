@@ -1,7 +1,7 @@
-# Rapport TP : Système de Gestion de Conférences & Keynotes (Microservices)
+# TP : Système de Gestion de Conférences & Keynotes (Microservices)
 
 ## 1. Contexte et Objectif
-Ce projet a été réalisé dans le cadre de l'examen pratique "Systèmes Distribués". L'objectif est de mettre en place une architecture **Microservices** complète basée sur l'écosystème **Spring Cloud**, avec un frontend **Angular** et une sécurisation via **Keycloak**.
+L'objectif de ce TP est de mettre en place une architecture **Microservices** complète basée sur l'écosystème **Spring Cloud**, avec un frontend **Angular** et une sécurisation via **Keycloak**.
 
 L'application permet de gérer :
 * Des **Keynotes** (Intervenants) : Informations personnelles, fonction, email.
@@ -151,5 +151,4 @@ Présentation de l'application Web finale.
 | **11. Liste des Conférences (Admin)**<br>Tableau de bord pour gérer les conférences (CRUD). | ![Conferences](screenshots/conference-administration.png) |
 | **12. Gestion des Keynotes**<br>Liste des intervenants avec options de modification et suppression. | ![Keynotes](screenshots/keynotes.png) |
 | **13. Ajout d'une Conférence**<br>Formulaire réactif pour créer une nouvelle conférence. | ![Ajout conf](screenshots/add-conference.png) |
-| **14. Association Conférence-Keynote**<br>Modal permettant d'ajouter ou retirer des speakers à une conférence (Appel inter-service via Feign). | ![Assoc](screenshots/keynote-conf.png) |
-```
+| **14. Association Conférence-Keynote**<br>Modal permettant d'ajouter ou retirer des speakers à une conférence (Appel inter-service via Feign). | ![Assoc](screenshots/keynote-conf.png) | 
