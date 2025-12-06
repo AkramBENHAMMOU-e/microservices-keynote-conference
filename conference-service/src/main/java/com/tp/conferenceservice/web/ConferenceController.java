@@ -6,15 +6,25 @@ import com.tp.conferenceservice.feign.KeynoteRestClient;
 import com.tp.conferenceservice.model.Keynote;
 import com.tp.conferenceservice.repository.ConferenceRepository;
 import com.tp.conferenceservice.services.ConferenceService;
-import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
 public class ConferenceController {
+
+    private static final Logger log = LoggerFactory.getLogger(ConferenceController.class);
 
     private final ConferenceRepository conferenceRepository;
     private final KeynoteRestClient keynoteRestClient;
@@ -29,8 +39,14 @@ public class ConferenceController {
     @GetMapping("/conferences")
     public List<Conference> getAllConferences(){
        List<Conference> conferences = conferenceRepository.findAll();
-       List<Keynote> keynotes = keynoteRestClient.getAllKeynotes();
-       conferences.get(0).setKeynotes(keynotes);
+       try {
+           List<Keynote> keynotes = keynoteRestClient.getAllKeynotes();
+           if (!conferences.isEmpty()) {
+               conferences.get(0).setKeynotes(keynotes);
+           }
+       } catch (Exception ex) {
+           log.warn("Unable to fetch keynotes for conferences list: {}", ex.getMessage());
+       }
        return conferences;
     }
 

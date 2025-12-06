@@ -13,11 +13,17 @@ const isAccessAllowed = async (
   _: RouterStateSnapshot,
   authData: AuthGuardData
 ): Promise<boolean | UrlTree> => {
-
   const { authenticated, grantedRoles } = authData;
 
-  // ----- 1) Récupérer les rôles attendus -----
-  const requiredRoles: string[] = route.data['roles']; // ✔ ici le correct
+  const requiredRoles: string[] = route.data['roles'];
+  const requiresAuth = route.data['requiresAuth'] === true;
+
+  // Routes only requiring authentication (no specific roles)
+  if (requiresAuth && (!requiredRoles || requiredRoles.length === 0)) {
+    if (authenticated) return true;
+    const router = inject(Router);
+    return router.parseUrl('/home');
+  }
 
   if (!requiredRoles || requiredRoles.length === 0) {
     return false;

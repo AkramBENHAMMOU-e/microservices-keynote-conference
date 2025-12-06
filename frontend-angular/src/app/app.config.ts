@@ -11,7 +11,7 @@ import {
 } from 'keycloak-angular';
 
 const apiBearerCondition = createInterceptorCondition({
-  urlPattern: /^http:\/\/localhost:808[1-2](\/.*)?$/i,
+  urlPattern: /^http:\/\/localhost:8888(\/.*)?$/i,
   bearerPrefix: 'Bearer'
 });
 

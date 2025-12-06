@@ -10,9 +10,9 @@ import java.util.UUID;
 
 @FeignClient(name = "Keynote-service")
 public interface KeynoteRestClient {
-    @GetMapping("/keynotes")
+    @GetMapping("/api/keynotes")
     List<Keynote> getAllKeynotes();
 
-    @GetMapping("/keynotes/{id}")
+    @GetMapping("/api/keynotes/{id}")
     Keynote getKeynoteById(@PathVariable UUID id);
 }

@@ -10,7 +10,12 @@ export const routes: Routes = [
 
   { path: 'home', component: Accueil },
 
-  { path: 'conferenceList', component: ConferenceList },
+  {
+    path: 'conferenceList',
+    component: ConferenceList,
+    canActivate: [canActivateAuthRole],
+    data: { requiresAuth: true }
+  },
 
   {
     path: 'keynoteList',
