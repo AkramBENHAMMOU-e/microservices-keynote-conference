@@ -8,6 +8,7 @@ import {Keynote} from '../models/Keynote';
   imports: [
     ReactiveFormsModule
   ],
+  standalone: true,
   templateUrl: './new-keynote.html',
   styleUrl: './new-keynote.css',
 })

@@ -11,6 +11,7 @@ import {Keynote} from '../models/Keynote';
   imports: [
     NgForOf, CommonModule, FormsModule, NewKeynote
   ],
+  standalone: true,
   templateUrl: './keynote-list.html',
   styleUrl: './keynote-list.css',
 })

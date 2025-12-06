@@ -18,10 +18,5 @@ export const routes: Routes = [
     canActivate: [canActivateAuthRole],
     data: { roles: ['ADMIN'] }
   },
-  {
-    path: 'forbidden',
-    loadComponent: () =>
-      import('./forbidden/forbidden').then(m => m.Forbidden)
-  },
-  { path: '**', redirectTo: '/forbidden' }
+  { path: '**', redirectTo: '/home' }
 ];

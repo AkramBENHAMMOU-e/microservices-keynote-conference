@@ -23,9 +23,14 @@ const isAccessAllowed = async (
     return false;
   }
 
-  // ----- 2) Vérifier si l'utilisateur possède les rôles -----
-  const hasRole = (role: string): boolean =>
-    Object.values(grantedRoles.resourceRoles).some((roles) => roles.includes(role));
+  // ----- 2) Vérifier si l'utilisateur possède les rôles (realm OU client) -----
+  const hasRole = (role: string): boolean => {
+    const hasRealmRole = (grantedRoles.realmRoles || []).includes(role);
+    const hasResourceRole = Object.values(grantedRoles.resourceRoles || {}).some((roles) =>
+      roles.includes(role)
+    );
+    return hasRealmRole || hasResourceRole;
+  };
 
   const hasRequiredRole = requiredRoles.some((r) => hasRole(r));
 
@@ -33,9 +38,9 @@ const isAccessAllowed = async (
     return true;
   }
 
-  // ----- 3) Redirection vers /forbidden -----
+  // ----- 3) Redirection vers /home -----
   const router = inject(Router);
-  return router.parseUrl('/forbidden');
+  return router.parseUrl('/home');
 };
 
 export const canActivateAuthRole = createAuthGuard<CanActivateFn>(isAccessAllowed);

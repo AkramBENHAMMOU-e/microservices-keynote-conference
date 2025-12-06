@@ -6,6 +6,7 @@ import {CommonModule} from '@angular/common';
 @Component({
   selector: 'app-new-conference',
   imports: [ReactiveFormsModule, CommonModule],
+  standalone: true,
   templateUrl: './new-conference.html',
   styleUrl: './new-conference.css',
 })

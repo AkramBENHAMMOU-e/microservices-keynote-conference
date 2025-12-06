@@ -9,6 +9,7 @@ import {ConferenceService} from '../services/conference.service';
   imports: [
      CommonModule
   ],
+  standalone: true,
   templateUrl: './keynotes-conference-modale.html',
   styleUrl: './keynotes-conference-modale.css',
 })

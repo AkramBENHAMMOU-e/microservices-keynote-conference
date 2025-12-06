@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {RouterLink, RouterModule} from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-navbar',
@@ -12,4 +13,15 @@ import {RouterLink, RouterModule} from '@angular/router';
 })
 export class Navbar {
 
+  constructor(private keycloak: Keycloak) {
+  }
+
+  async handleLogin() {
+    await this.keycloak.login({
+      redirectUri: window.location.origin
+    });
+  }
+  async handleLogout() {
+    await this.keycloak.logout({ redirectUri: window.location.origin });
+  }
 }
